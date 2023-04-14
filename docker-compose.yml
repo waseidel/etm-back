@@ -1,0 +1,18 @@
+version: "3.4"
+volumes:
+  data:
+services:
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: etm
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root 
+    volumes:
+      - data:/var/lib/mysql/data
+    ports:
+      - "3306:3306"
+    restart: always
+
+# https://www.youtube.com/watch?v=-jLuJ4kVhEE&list=PLWpsZlKx38t-fAZmqyQNCw7T_J8ORnddg&index=8
