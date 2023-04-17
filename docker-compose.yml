@@ -1,18 +1,27 @@
-version: "3.4"
-volumes:
-  data:
+version: '3.8'
 services:
-  db:
-    image: mariadb
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: etm
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root 
-    volumes:
-      - data:/var/lib/mysql/data
+  mongodb:
+    image: mongo:latest
+    env_file:
+      - .env
     ports:
-      - "3306:3306"
-    restart: always
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
 
-# https://www.youtube.com/watch?v=-jLuJ4kVhEE&list=PLWpsZlKx38t-fAZmqyQNCw7T_J8ORnddg&index=8
+  api: 
+    build: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    command: npm run start:dev
+    env_file:
+      - .env
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb_data_container:
+
