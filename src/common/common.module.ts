@@ -1,15 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { GraphqlModule } from './graphql.module';
-import { MongoDBModule } from './mongodb.module';
+import { ConfigModule } from './config.module';
+import { GraphQLModule } from './graph-ql.module';
+import { TypeOrmModule } from './type-orm.module';
 
 @Module({
-  imports: [
-    GraphqlModule,
-    MongoDBModule,
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-  ],
+  imports: [ConfigModule, GraphQLModule, TypeOrmModule],
 })
 export class CommonModule { }
